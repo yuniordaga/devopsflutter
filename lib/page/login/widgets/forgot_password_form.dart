@@ -1,0 +1,69 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_avanzado/libs/auth.dart';
+import 'package:flutter_avanzado/page/home/home_page.dart';
+import 'package:flutter_avanzado/page/login/widgets/input_text_login.dart';
+import 'package:flutter_avanzado/utils/responsive.dart';
+import 'package:flutter_avanzado/widgets/circle_buttom.dart';
+import 'package:flutter_avanzado/widgets/rounded_buttom.dart';
+
+class ForgotPasswordForm extends StatefulWidget {
+  final VoidCallback onGoToLogin;
+  const ForgotPasswordForm({Key key,@required this.onGoToLogin}) : super(key: key);
+
+  @override
+  _ForgotPasswordFormState createState() => _ForgotPasswordFormState();
+}
+
+class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
+  void _goTo(BuildContext context ,User user){
+    if(user!=null){
+      Navigator.pushReplacementNamed(context, HomePage.routeName);
+    }else{
+      print("login failed");
+    }
+    
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final Responsive responsive = Responsive.of(context);
+    return Align(
+      alignment: Alignment.center,
+        child: SafeArea(
+        top: true,
+        child: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal:15),
+            color: Colors.white,      
+            constraints: BoxConstraints(
+              maxWidth: 400,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+              Text("Reset Password",style: TextStyle(color: Colors.cyan[900],fontSize: 25,fontWeight: FontWeight.bold,fontFamily: 'raleway'),),
+              Text("Lorem ipsum dolor sit amet,sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",style: TextStyle(fontWeight: FontWeight.w300),),
+              SizedBox(height:responsive.ip(2)),              
+               InputTextLogin(iconpath: Icon(Icons.email), placeholder:"Email"),
+               SizedBox(height:responsive.ip(2)),               
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    FlatButton(onPressed: widget.onGoToLogin, child: Text("Back to Log in")),
+                    SizedBox(width: 10,),
+                    RoundedButtom(onPressed: (){}, label: "send"),
+                  ],
+                ),
+                SizedBox(height:responsive.ip(2)),                 
+              ],
+            ),
+            
+          ),
+        ),
+      ),
+    );
+  }
+}
